@@ -16,6 +16,10 @@ local function main()
         "system/define",
         "system/layer_manager",
         "system/observable",
+
+        "world/world_model",
+        "world/world_layer",
+        "world/world_controller",
     }
 
     for i,value in ipairs(requires) do

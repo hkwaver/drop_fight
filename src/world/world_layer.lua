@@ -1,18 +1,23 @@
 ------------------------------------------
 
--- GameScene
+-- WorldLayer
 
 ------------------------------------------
-Global.GameScene = class("GameScene", cc.Scene)
+Global.WorldLayer = class("WorldLayer", cc.Node, Observable)
 
-local MyClass = Global.GameScene
+local MyClass = Global.WorldLayer
 
     ------------------------------------------
     -- ctor
     ------------------------------------------
-    function MyClass:ctor()
+    function MyClass:ctor(model)
+
+        Observable.ctor(self)
 
         self:enableNodeEvents()
+
+        self._model = model
+        self._model:addObserver(self)
     end
 
     ------------------------------------------
@@ -20,9 +25,7 @@ local MyClass = Global.GameScene
     ------------------------------------------
     function MyClass:onEnter()
 
-        local controller = WorldController:create()
     end
-
     ------------------------------------------
     -- onExit
     ------------------------------------------
