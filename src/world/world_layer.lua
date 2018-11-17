@@ -36,25 +36,10 @@ local MyClass = Global.WorldLayer
 
     end
 
-
     ------------------------------------------
     -- initializeView
     ------------------------------------------
     function MyClass:initializeView()
-
-        local dice = cc.Sprite3D:create("res/model/dice/Dice.c3b")
-        dice:setTexture("res/model/dice/d6-white-dots.png")
-        dice:setScale(20)
-        dice:setPosition(cc.p(300, 200))
-        self:addChild(dice)
-
-        local dice6 = dice:getMeshByName("d6")
-        local dice6Low = dice:getMeshByName("d6Low")
-        local dice10 = dice:getMeshByName("d10")
-        local dice10Low = dice:getMeshByName("d10Low")
-        dice6Low:setVisible(false)
-        dice10:setVisible(false)
-        dice10Low:setVisible(false)
 
         local touchPanel = ccui.Layout:create()
         touchPanel:setContentSize(display.width, display.height)
@@ -93,8 +78,7 @@ local MyClass = Global.WorldLayer
     ------------------------------------------
     function MyClass:onTouchEnded(touch, event)
 
-        local action = cc.RotateBy:create(1, cc.vec3(0, 90, 0))
-        self._viewRef.dice:runAction(action)
+        self:notify("EVENT_requestTouchEnd")
     end
 
 return MyClass

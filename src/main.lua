@@ -20,6 +20,10 @@ local function main()
         "world/world_model",
         "world/world_layer",
         "world/world_controller",
+
+        "dice/dice_model",
+        "dice/dice_view",
+        "dice/dice_controller",
     }
 
     for i,value in ipairs(requires) do

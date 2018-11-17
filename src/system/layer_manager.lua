@@ -82,11 +82,11 @@ local MyClass = Global.LayerManager
         local currentLayer = self:getCurrentLayer()
         if currentLayer ~= nil then
 
-            currentLayer:hide()
+            currentLayer:setVisible(false)
         end
 
         self._currentLayerKey = key
-        nextLayer:show()
+        nextLayer:setVisible(true)
     end
 
 
