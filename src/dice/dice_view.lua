@@ -3,7 +3,7 @@
 -- DiceView
 
 ------------------------------------------
-Global.DiceView = class("DiceView", cc.Sprite3D, Observable)
+Global.DiceView = class("DiceView", cc.Node, Observable)
 
 local MyClass = Global.DiceView
 

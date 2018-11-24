@@ -22,7 +22,7 @@ local MyClass = Global.GameScene
 
         local camera = cc.Camera:createPerspective(60, display.width / display.height, 1, 1000)
         camera:setCameraFlag(cc.CameraFlag.USER1)
-        camera:setPosition3D(cc.vec3(400, 400, -400))
+        camera:setPosition3D(cc.vec3(0, 400, -400))
         camera:lookAt(cc.vec3(0, 0, 0), cc.vec3(0, 1, 0))
         self:addChild(camera)
 

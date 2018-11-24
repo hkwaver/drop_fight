@@ -21,6 +21,10 @@ local function main()
         "world/world_layer",
         "world/world_controller",
 
+        "player/player_model",
+        "player/player_view",
+        "player/player_controller",
+
         "dice/dice_model",
         "dice/dice_view",
         "dice/dice_controller",

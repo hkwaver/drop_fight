@@ -19,6 +19,7 @@ local MyClass = Global.WorldController
         LayerManager.getInstance():addLayer(Define.LayerKey.WORLD, self._view)
         LayerManager.getInstance():transitionLayer(Define.LayerKey.WORLD)
 
+        self._playerController = PlayerController:create()
         self._diceController = DiceController:create()
     end
 
@@ -30,7 +31,8 @@ local MyClass = Global.WorldController
     -- EVENT_requestTouchEnd
     ------------------------------------------
     function MyClass:EVENT_requestTouchEnd()
-        print("EVENT_requestTouchEnd")
+
+        self._diceController:dropLine()
     end
 
 return MyClass

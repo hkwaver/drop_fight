@@ -9,5 +9,5 @@ Global.Define = class("Define")
         WORLD = "world",
     }
 
-    Define.FIELD_ROW = 7
-    Define.FIELD_COLUMN = 7
+    Define.FIELD_ROW = 8
+    Define.FIELD_COLUMN = 8

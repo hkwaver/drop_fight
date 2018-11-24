@@ -35,4 +35,12 @@ local MyClass = Global.DiceController
         end
     end
 
+
+    ------------------------------------------
+    -- dropLine
+    ------------------------------------------
+    function MyClass:dropLine(column, row, direction)
+
+    end
+
 return MyClass
