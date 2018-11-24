@@ -26,7 +26,6 @@ local MyClass = Global.WorldLayer
     function MyClass:onEnter()
 
         self:initializeView()
-
     end
 
     ------------------------------------------

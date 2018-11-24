@@ -3,7 +3,7 @@
 -- DiceView
 
 ------------------------------------------
-Global.DiceView = class("DiceView", cc.Node, Observable)
+Global.DiceView = class("DiceView", cc.Sprite3D, Observable)
 
 local MyClass = Global.DiceView
 
@@ -15,6 +15,7 @@ local MyClass = Global.DiceView
         Observable.ctor(self)
 
         self:enableNodeEvents()
+        self:setCameraMask(cc.CameraFlag.USER1)
 
         self._model = model
         self._model:addObserver(self)
@@ -41,9 +42,10 @@ local MyClass = Global.DiceView
     function MyClass:initializeView()
 
         local dice = cc.Sprite3D:create("res/model/dice/Dice.c3b")
+        dice:setCameraMask(cc.CameraFlag.USER1)
         dice:setTexture("res/model/dice/d6-white-dots.png")
         dice:setScale(20)
-        dice:setPosition(cc.p(300, 200))
+        dice:setPosition3D(cc.vec3(0, 0, 0))
         self:addChild(dice)
 
         local dice6 = dice:getMeshByName("d6")
@@ -63,10 +65,10 @@ local MyClass = Global.DiceView
     function MyClass:EVENT_setIndex()
 
         local index =  self._model:getIndex()
-        local x = (index - 1) % Define.FIELD_COLUMN
-        local y = (index - 1) / Define.FIELD_COLUMN
+        local x = (index - 1) % Define.FIELD_COLUMN - math.floor(Define.FIELD_COLUMN / 2)
+        local z = math.floor((index - 1) / Define.FIELD_COLUMN) - math.floor(Define.FIELD_COLUMN / 2)
 
-        self:setPosition(cc.p(20 * x, 20 * y))
+        self:setPosition3D(cc.vec3(45 * x, 0.0, 45 * z))
     end
 
 return MyClass
