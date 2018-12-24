@@ -28,25 +28,27 @@ local MyClass = Global.DiceController
     function MyClass:setDiceGroupView(view)
 
         self._diceGroupView = view
+    end
 
-        self._diceMap = {}
+    ------------------------------------------
+    -- initialize
+    ------------------------------------------
+    function MyClass:initialize()
 
         for i = 1, Define.FIELD_ROW do
 
-            local columnLine = {}
-
             for j = 1, Define.FIELD_COLUMN do
 
+                local index = j + i * Define.FIELD_COLUMN
+
                 local model = DiceModel:create()
-                local view = DiceView:create(model)
+                model:setIndex(index)
+                self._diceGroupModel:addDiceModel(i, j, model)
+
+                local view = DiceView:create()
+                view:setDiceModel(model)
                 self._diceGroupView:addChild(view)
-
-                model:setIndex(j + i * Define.FIELD_COLUMN)
-
-                table.insert(columnLine, model)
             end
-
-            table.insert(self._diceMap, columnLine)
         end
     end
 

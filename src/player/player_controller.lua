@@ -46,7 +46,9 @@ local MyClass = Global.PlayerController
     ------------------------------------------
     function MyClass:EVENT_requestAttackSucceed()
 
-        printInfo("EVENT_requestAttackSucceed")
+        local index = self._playerModel:getIndex()
+        local direction = self._playerModel:getDirection()
+        self._diceGroupModel:dropLine(index, direction)
     end
 
 return MyClass

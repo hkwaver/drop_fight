@@ -16,6 +16,12 @@ local MyClass = Global.DiceView
 
         self:enableNodeEvents()
         self:setCameraMask(cc.CameraFlag.USER1)
+    end
+
+    ------------------------------------------
+    -- setDiceModel
+    ------------------------------------------
+    function MyClass:setDiceModel(model)
 
         self._model = model
         self._model:addObserver(self)
@@ -57,6 +63,20 @@ local MyClass = Global.DiceView
         dice10Low:setVisible(false)
 
         self._dice = dice
+
+        local index =  self._model:getIndex()
+        self:setPositionByIndex(index)
+    end
+
+    ------------------------------------------
+    -- setPositionByIndex
+    ------------------------------------------
+    function MyClass:setPositionByIndex(index)
+
+        local x = (index - 1) % Define.FIELD_COLUMN - math.floor(Define.FIELD_COLUMN / 2)
+        local z = math.floor((index - 1) / Define.FIELD_COLUMN) - math.floor(Define.FIELD_COLUMN / 2)
+
+        self:setPosition3D(cc.vec3(45 * x, 0.0, 45 * z))
     end
 
     ------------------------------------------
@@ -64,11 +84,15 @@ local MyClass = Global.DiceView
     ------------------------------------------
     function MyClass:EVENT_setIndex()
 
-        local index =  self._model:getIndex()
-        local x = (index - 1) % Define.FIELD_COLUMN - math.floor(Define.FIELD_COLUMN / 2)
-        local z = math.floor((index - 1) / Define.FIELD_COLUMN) - math.floor(Define.FIELD_COLUMN / 2)
+        self:setPositionByIndex(self._model:getIndex())
+    end
 
-        self:setPosition3D(cc.vec3(45 * x, 0.0, 45 * z))
+    ------------------------------------------
+    -- EVENT_drop
+    ------------------------------------------
+    function MyClass:EVENT_drop()
+
+        self:setVisible(false)
     end
 
 return MyClass

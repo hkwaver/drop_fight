@@ -16,6 +16,20 @@ local MyClass = Global.PlayerModel
     end
 
     ------------------------------------------
+    -- getIndex
+    ------------------------------------------
+    function MyClass:getIndex()
+        return 22
+    end
+
+    ------------------------------------------
+    -- getDirection
+    ------------------------------------------
+    function MyClass:getDirection()
+        return 1
+    end
+
+    ------------------------------------------
     -- ctor
     ------------------------------------------
     function MyClass:attack()

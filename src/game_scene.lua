@@ -71,6 +71,7 @@ local MyClass = Global.GameScene
         self._diceController = DiceController:create()
         self._diceController:setDiceGroupModel(self._diceGroupModel)
         self._diceController:setDiceGroupView(self._diceGroupView)
+        self._diceController:initialize()
 
         LayerManager.getInstance():addLayer(Define.LayerKey.WORLD, self._worldView)
         LayerManager.getInstance():transitionLayer(Define.LayerKey.WORLD)

@@ -10,7 +10,7 @@ local MyClass = Global.DiceModel
     ------------------------------------------
     -- ctor
     ------------------------------------------
-    function MyClass:ctor(model)
+    function MyClass:ctor()
 
         Observable.ctor(self)
 
@@ -18,7 +18,7 @@ local MyClass = Global.DiceModel
     end
 
     ------------------------------------------
-    -- setIndex
+    -- getIndex
     ------------------------------------------
     function MyClass:getIndex(index)
         return self._index
@@ -31,6 +31,14 @@ local MyClass = Global.DiceModel
 
         self._index = index
         self:notify("EVENT_setIndex")
+    end
+
+    ------------------------------------------
+    -- drop
+    ------------------------------------------
+    function MyClass:drop(index)
+
+        self:notify("EVENT_drop")
     end
 
 return MyClass
