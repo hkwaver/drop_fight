@@ -20,6 +20,7 @@ local MyClass = Global.PlayerModel
     ------------------------------------------
     function MyClass:attack()
 
+        self:notify("EVENT_playerAttack")
     end
 
     ------------------------------------------

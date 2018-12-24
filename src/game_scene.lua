@@ -65,6 +65,7 @@ local MyClass = Global.GameScene
 
         self._playerController = PlayerController:create()
         self._playerController:setPlayerModel(self._playerModel)
+        self._playerController:setDiceGroupModel(self._diceGroupModel)
         self._playerController:setPlayerView(self._playerView)
 
         self._diceController = DiceController:create()

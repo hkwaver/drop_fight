@@ -58,6 +58,34 @@ local MyClass = Global.PlayerView
         player:getMeshByName("d10Low"):setVisible(false)
 
         self:setPosition3D(cc.vec3(0, 50, 0))
+
+        self._viewRef = {
+            player = player
+        }
+    end
+
+-- ****************************************************************************************
+-- event handler
+-- ****************************************************************************************
+
+    ------------------------------------------
+    -- EVENT_playerAttack
+    ------------------------------------------
+    function MyClass:EVENT_playerAttack()
+
+        self._viewRef.player:runAction(cc.Sequence:create(
+            cc.RotateBy:create(0.2, 360),
+            cc.CallFunc:create(function()
+                self:notify("EVENT_requestAttackSucceed")
+            end)
+        ))
+    end
+
+    ------------------------------------------
+    -- EVENT_playerMove
+    ------------------------------------------
+    function MyClass:EVENT_playerMove()
+
     end
 
 return MyClass
