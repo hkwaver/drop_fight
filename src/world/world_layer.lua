@@ -51,10 +51,6 @@ local MyClass = Global.WorldLayer
 
         local eventDispatcher = touchPanel:getEventDispatcher()
         eventDispatcher:addEventListenerWithSceneGraphPriority(listener, touchPanel)
-
-        self._viewRef = {
-            dice = dice,
-        }
     end
 
     ------------------------------------------
@@ -77,7 +73,16 @@ local MyClass = Global.WorldLayer
     ------------------------------------------
     function MyClass:onTouchEnded(touch, event)
 
-        self:notify("EVENT_requestTouchEnd")
+        local startPos = touch:getStartLocation()
+        local currentPos = touch:getLocation()
+
+        if cc.pGetDistance(currentPos, startPos) < Define.TOUCH_MOVE_THRESHOLD then
+
+            self:notify("EVENT_requestAttack")
+        else
+
+            self:notify("EVENT_requestMove", Define.DIRECTION_RIGHT)
+        end
     end
 
 return MyClass

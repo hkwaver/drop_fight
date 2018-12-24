@@ -41,10 +41,15 @@ local MyClass = Global.PlayerView
     ------------------------------------------
     function MyClass:initializeView()
 
-        local player = cc.Sprite3D:create("res/model/unitychan/unitychan.c3b")
+        local player = cc.Sprite3D:create("res/model/dice/Dice.c3b")
         player:setCameraMask(cc.CameraFlag.USER1)
-        player:setScale(0.5)
+        player:setTexture("res/model/dice/d6-black-dots.png")
+        player:setScale(10)
         self:addChild(player)
+
+        player:getMeshByName("d6Low"):setVisible(false)
+        player:getMeshByName("d10"):setVisible(false)
+        player:getMeshByName("d10Low"):setVisible(false)
 
         self:setPosition3D(cc.vec3(0, 50, 0))
     end

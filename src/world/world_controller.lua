@@ -28,11 +28,19 @@ local MyClass = Global.WorldController
 -- ****************************************************************************************
 
     ------------------------------------------
-    -- EVENT_requestTouchEnd
+    -- EVENT_requestAttack
     ------------------------------------------
-    function MyClass:EVENT_requestTouchEnd()
+    function MyClass:EVENT_requestAttack()
 
-        self._diceController:dropLine()
+        self._playerController:attack()
+    end
+
+    ------------------------------------------
+    -- EVENT_requestMove
+    ------------------------------------------
+    function MyClass:EVENT_requestMove(direction)
+
+        self._playerController:move(direction)
     end
 
 return MyClass
