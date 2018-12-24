@@ -12,7 +12,22 @@ local MyClass = Global.DiceController
     ------------------------------------------
     function MyClass:ctor()
 
-        local layer = LayerManager.getInstance():getCurrentLayer()
+    end
+
+    ------------------------------------------
+    -- setDiceGroupModel
+    ------------------------------------------
+    function MyClass:setDiceGroupModel(model)
+
+        self._diceGroupModel = model
+    end
+
+    ------------------------------------------
+    -- setDiceGroupView
+    ------------------------------------------
+    function MyClass:setDiceGroupView(view)
+
+        self._diceGroupView = view
 
         self._diceMap = {}
 
@@ -24,7 +39,7 @@ local MyClass = Global.DiceController
 
                 local model = DiceModel:create()
                 local view = DiceView:create(model)
-                layer:addChild(view)
+                self._diceGroupView:addChild(view)
 
                 model:setIndex(j + i * Define.FIELD_COLUMN)
 
@@ -33,14 +48,6 @@ local MyClass = Global.DiceController
 
             table.insert(self._diceMap, columnLine)
         end
-    end
-
-
-    ------------------------------------------
-    -- dropLine
-    ------------------------------------------
-    function MyClass:dropLine(column, row, direction)
-
     end
 
 return MyClass

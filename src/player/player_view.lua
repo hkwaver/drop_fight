@@ -10,15 +10,21 @@ local MyClass = Global.PlayerView
     ------------------------------------------
     -- ctor
     ------------------------------------------
-    function MyClass:ctor(model)
+    function MyClass:ctor()
 
         Observable.ctor(self)
 
         self:enableNodeEvents()
         self:setCameraMask(cc.CameraFlag.USER1)
+    end
 
-        self._model = model
-        self._model:addObserver(self)
+    ------------------------------------------
+    -- setPlayerModel
+    ------------------------------------------
+    function MyClass:setPlayerModel(model)
+
+        self._playerModel = model
+        self._playerModel:addObserver(self)
     end
 
     ------------------------------------------

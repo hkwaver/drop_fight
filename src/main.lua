@@ -28,6 +28,9 @@ local function main()
         "dice/dice_model",
         "dice/dice_view",
         "dice/dice_controller",
+
+        "dice/dice_group/dice_group_model",
+        "dice/dice_group/dice_group_view",
     }
 
     for i,value in ipairs(requires) do

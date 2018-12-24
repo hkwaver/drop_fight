@@ -15,4 +15,18 @@ local MyClass = Global.PlayerModel
         Observable.ctor(self)
     end
 
+    ------------------------------------------
+    -- ctor
+    ------------------------------------------
+    function MyClass:attack()
+
+    end
+
+    ------------------------------------------
+    -- move
+    ------------------------------------------
+    function MyClass:move(direction)
+
+    end
+
 return MyClass

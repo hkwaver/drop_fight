@@ -10,14 +10,20 @@ local MyClass = Global.WorldLayer
     ------------------------------------------
     -- ctor
     ------------------------------------------
-    function MyClass:ctor(model)
+    function MyClass:ctor()
 
         Observable.ctor(self)
 
         self:enableNodeEvents()
+    end
 
-        self._model = model
-        self._model:addObserver(self)
+    ------------------------------------------
+    -- setWorldModel
+    ------------------------------------------
+    function MyClass:setWorldModel(model)
+
+        self._worldModel = model
+        self._worldModel:addObserver(self)
     end
 
     ------------------------------------------

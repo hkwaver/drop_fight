@@ -12,15 +12,36 @@ local MyClass = Global.WorldController
     ------------------------------------------
     function MyClass:ctor()
 
-        self._model = WorldModel:create()
-        self._view = WorldLayer:create(self._model)
-        self._view:addObserver(self)
+    end
 
-        LayerManager.getInstance():addLayer(Define.LayerKey.WORLD, self._view)
-        LayerManager.getInstance():transitionLayer(Define.LayerKey.WORLD)
+    ------------------------------------------
+    -- setWorldModel
+    ------------------------------------------
+    function MyClass:setWorldModel(model)
+        self._worldModel = model
+    end
 
-        self._playerController = PlayerController:create()
-        self._diceController = DiceController:create()
+    ------------------------------------------
+    -- setPlayerModel
+    ------------------------------------------
+    function MyClass:setPlayerModel(model)
+        self._playerModel = model
+    end
+
+    ------------------------------------------
+    -- setDiceGroupModel
+    ------------------------------------------
+    function MyClass:setDiceGroupModel(model)
+        self._diceGroupModel = model
+    end
+
+    ------------------------------------------
+    -- setWorldView
+    ------------------------------------------
+    function MyClass:setWorldView(view)
+
+        self._worldView = view
+        self._worldView:addObserver(self)
     end
 
 -- ****************************************************************************************
@@ -32,7 +53,7 @@ local MyClass = Global.WorldController
     ------------------------------------------
     function MyClass:EVENT_requestAttack()
 
-        self._playerController:attack()
+        self._playerModel:attack()
     end
 
     ------------------------------------------
@@ -40,7 +61,7 @@ local MyClass = Global.WorldController
     ------------------------------------------
     function MyClass:EVENT_requestMove(direction)
 
-        self._playerController:move(direction)
+        self._playerModel:move(direction)
     end
 
 return MyClass

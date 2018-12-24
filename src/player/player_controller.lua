@@ -12,25 +12,20 @@ local MyClass = Global.PlayerController
     ------------------------------------------
     function MyClass:ctor()
 
-        local layer = LayerManager.getInstance():getCurrentLayer()
-
-        self._model = PlayerModel:create()
-        self._view = PlayerView:create(self._model)
-        layer:addChild(self._view)
     end
 
     ------------------------------------------
-    -- attack
+    -- setPlayerModel
     ------------------------------------------
-    function MyClass:attack()
-
+    function MyClass:setPlayerModel(model)
+        self._playerModel = model
     end
 
     ------------------------------------------
-    -- move
+    -- setPlayerView
     ------------------------------------------
-    function MyClass:move(direction)
-
+    function MyClass:setPlayerView(view)
+        self._playerView = view
     end
 
 return MyClass
