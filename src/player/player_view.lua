@@ -57,8 +57,6 @@ local MyClass = Global.PlayerView
         player:getMeshByName("d10"):setVisible(false)
         player:getMeshByName("d10Low"):setVisible(false)
 
-        self:setPosition3D(cc.vec3(0, 50, 0))
-
         self._viewRef = {
             player = player
         }
@@ -86,6 +84,7 @@ local MyClass = Global.PlayerView
     ------------------------------------------
     function MyClass:EVENT_playerMove()
 
+        self:setPosition3D(self._playerModel:getPosition())
     end
 
 return MyClass

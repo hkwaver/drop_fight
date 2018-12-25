@@ -72,6 +72,31 @@ local MyClass = Global.WorldLayer
     ------------------------------------------
     function MyClass:onTouchMoved(touch, event)
 
+        local startPos = touch:getStartLocation()
+        local currentPos = touch:getLocation()
+
+        if cc.pGetDistance(currentPos, startPos) < Define.TOUCH_MOVE_THRESHOLD then
+            return
+        end
+
+        local angle = cc.pToAngleSelf(cc.pSub(currentPos, startPos))
+
+        if - math.pi / 4 < angle and angle <= math.pi / 4 then
+
+            self:notify("EVENT_requestMove", Define.DIRECTION_RIGHT)
+
+        elseif math.pi / 4 < angle and angle <= 3 * math.pi / 4 then
+
+            self:notify("EVENT_requestMove", Define.DIRECTION_FORWARD)
+
+        elseif - 3 * math.pi / 4 < angle and angle <= - math.pi / 4 then
+
+            self:notify("EVENT_requestMove", Define.DIRECTION_BACK)
+
+        else
+
+            self:notify("EVENT_requestMove", Define.DIRECTION_LEFT)
+        end
     end
 
     ------------------------------------------
@@ -85,9 +110,6 @@ local MyClass = Global.WorldLayer
         if cc.pGetDistance(currentPos, startPos) < Define.TOUCH_MOVE_THRESHOLD then
 
             self:notify("EVENT_requestAttack")
-        else
-
-            self:notify("EVENT_requestMove", Define.DIRECTION_RIGHT)
         end
     end
 

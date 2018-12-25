@@ -36,7 +36,7 @@ local MyClass = Global.DiceModel
     ------------------------------------------
     -- drop
     ------------------------------------------
-    function MyClass:drop(index)
+    function MyClass:drop()
 
         self:notify("EVENT_drop")
     end

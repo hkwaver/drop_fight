@@ -34,9 +34,33 @@ local MyClass = Global.DiceGroupModel
         local row = math.floor(baseIndex / Define.FIELD_COLUMN)
         local column = (baseIndex % Define.FIELD_COLUMN) + 1
 
-        for i = column, #self._diceModelMap[row] do
+        if direction == Define.DIRECTION_RIGHT then
 
-            self._diceModelMap[row][i]:drop()
+            for i = column, #self._diceModelMap[row] do
+
+                self._diceModelMap[row][i]:drop()
+            end
+
+        elseif direction == Define.DIRECTION_LEFT then
+
+            for i = #self._diceModelMap[row], column, -1 do
+
+                self._diceModelMap[row][i]:drop()
+            end
+
+        elseif direction == Define.DIRECTION_FORWARD then
+
+            for i = row, #self._diceModelMap do
+
+                self._diceModelMap[i][column]:drop()
+            end
+
+        elseif direction == Define.DIRECTION_BACK then
+
+            for i = #self._diceModelMap, row, -1 do
+
+                self._diceModelMap[i][column]:drop()
+            end
         end
     end
 
