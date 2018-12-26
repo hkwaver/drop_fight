@@ -88,11 +88,45 @@ local MyClass = Global.DiceView
     end
 
     ------------------------------------------
-    -- EVENT_drop
+    -- EVENT_setState
     ------------------------------------------
-    function MyClass:EVENT_drop()
+    function MyClass:EVENT_setState()
 
-        self:setVisible(false)
+        if self._model:getState() == DiceModel.STATE_VISIBLE then
+
+            self:setVisible(true)
+            self:setPositionByIndex(self._model:getIndex())
+
+        elseif self._model:getState() == DiceModel.STATE_IGNITION then
+
+            self:runAction(cc.Sequence:create(
+                cc.RotateBy:create(0.2, 360),
+                cc.CallFunc:create(function()
+                    self._model:setState(DiceModel.STATE_DROP)
+                end)
+            ))
+
+        elseif self._model:getState() == DiceModel.STATE_DROP then
+
+            self:runAction(cc.Sequence:create(
+                cc.MoveBy:create(2, cc.vec3(0, -100, 0)),
+                cc.CallFunc:create(function()
+                    self._model:setState(DiceModel.STATE_INVISIBLE)
+                end)
+            ))
+
+        elseif self._model:getState() == DiceModel.STATE_INVISIBLE then
+
+            self:setVisible(false)
+            self:runAction(cc.Sequence:create(
+                cc.DelayTime:create(2),
+                cc.CallFunc:create(function()
+                    self._model:setState(DiceModel.STATE_VISIBLE)
+                end)
+            ))
+        else
+
+        end
     end
 
 return MyClass

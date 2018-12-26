@@ -7,6 +7,13 @@ Global.DiceModel = class("DiceModel", Observable)
 
 local MyClass = Global.DiceModel
 
+    MyClass.STATE_NONE = 0
+    MyClass.STATE_VISIBLE   = 1
+    MyClass.STATE_IGNITION  = 2
+    MyClass.STATE_DROP      = 3
+    MyClass.STATE_INVISIBLE = 4
+
+
     ------------------------------------------
     -- ctor
     ------------------------------------------
@@ -34,11 +41,26 @@ local MyClass = Global.DiceModel
     end
 
     ------------------------------------------
-    -- drop
+    -- isState
     ------------------------------------------
-    function MyClass:drop()
+    function MyClass:isState(state)
+        return self._state == state
+    end
 
-        self:notify("EVENT_drop")
+    ------------------------------------------
+    -- getState
+    ------------------------------------------
+    function MyClass:getState()
+        return self._state
+    end
+
+    ------------------------------------------
+    -- Ignition
+    ------------------------------------------
+    function MyClass:setState(state)
+
+        self._state = state
+        self:notify("EVENT_setState")
     end
 
 return MyClass

@@ -47,6 +47,7 @@ local MyClass = Global.DiceController
 
                 local view = DiceView:create()
                 view:setDiceModel(model)
+                view:addObserver(self)
                 self._diceGroupView:addChild(view)
             end
         end
