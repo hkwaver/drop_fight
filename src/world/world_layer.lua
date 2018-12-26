@@ -15,6 +15,9 @@ local MyClass = Global.WorldLayer
         Observable.ctor(self)
 
         self:enableNodeEvents()
+
+        self._isPressed = false
+        self._direction = cc.vec3(0, 0, 0)
     end
 
     ------------------------------------------
@@ -51,18 +54,35 @@ local MyClass = Global.WorldLayer
         self:addChild(touchPanel)
 
         local listener = cc.EventListenerTouchOneByOne:create()
-        listener:registerScriptHandler(handler(self, self.onTouchBegan), cc.Handler.EVENT_TOUCH_BEGAN )
-        listener:registerScriptHandler(handler(self, self.onTouchMoved), cc.Handler.EVENT_TOUCH_MOVED )
-        listener:registerScriptHandler(handler(self, self.onTouchEnded), cc.Handler.EVENT_TOUCH_ENDED )
+        listener:registerScriptHandler(handler(self, self.onTouchBegan), cc.Handler.EVENT_TOUCH_BEGAN)
+        listener:registerScriptHandler(handler(self, self.onTouchMoved), cc.Handler.EVENT_TOUCH_MOVED)
+        listener:registerScriptHandler(handler(self, self.onTouchEnded), cc.Handler.EVENT_TOUCH_ENDED)
 
         local eventDispatcher = touchPanel:getEventDispatcher()
         eventDispatcher:addEventListenerWithSceneGraphPriority(listener, touchPanel)
+
+        cc.Director:getInstance():getScheduler():scheduleScriptFunc(handler(self, self.update), 0, false)
+    end
+
+    ------------------------------------------
+    -- update
+    ------------------------------------------
+    function MyClass:update(dt)
+
+        if not self._isPressed then
+            return
+        end
+
+        self:notify("EVENT_requestMove", self._direction)
     end
 
     ------------------------------------------
     -- onTouchBegan
     ------------------------------------------
     function MyClass:onTouchBegan(touch, event)
+
+        self._isPressed = true
+        self._direction = cc.vec3(0, 0, 0)
 
         return true
     end
@@ -83,19 +103,19 @@ local MyClass = Global.WorldLayer
 
         if - math.pi / 4 < angle and angle <= math.pi / 4 then
 
-            self:notify("EVENT_requestMove", Define.DIRECTION_RIGHT)
+            self._direction = Define.DIRECTION_RIGHT
 
         elseif math.pi / 4 < angle and angle <= 3 * math.pi / 4 then
 
-            self:notify("EVENT_requestMove", Define.DIRECTION_FORWARD)
+            self._direction = Define.DIRECTION_FORWARD
 
         elseif - 3 * math.pi / 4 < angle and angle <= - math.pi / 4 then
 
-            self:notify("EVENT_requestMove", Define.DIRECTION_BACK)
+            self._direction = Define.DIRECTION_BACK
 
         else
 
-            self:notify("EVENT_requestMove", Define.DIRECTION_LEFT)
+            self._direction = Define.DIRECTION_LEFT
         end
     end
 
@@ -111,6 +131,8 @@ local MyClass = Global.WorldLayer
 
             self:notify("EVENT_requestAttack")
         end
+
+        self._isPressed = false
     end
 
 return MyClass
