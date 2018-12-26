@@ -31,6 +31,7 @@ local function main()
 
         "dice/dice_group/dice_group_model",
         "dice/dice_group/dice_group_view",
+        "dice/dice_group/dice_group_controller",
     }
 
     for i,value in ipairs(requires) do

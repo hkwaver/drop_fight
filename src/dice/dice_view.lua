@@ -102,7 +102,7 @@ local MyClass = Global.DiceView
             self:runAction(cc.Sequence:create(
                 cc.RotateBy:create(0.2, 360),
                 cc.CallFunc:create(function()
-                    self._model:setState(DiceModel.STATE_DROP)
+                    self:notify("EVENT_requestChangeDrop")
                 end)
             ))
 
@@ -111,7 +111,7 @@ local MyClass = Global.DiceView
             self:runAction(cc.Sequence:create(
                 cc.MoveBy:create(2, cc.vec3(0, -100, 0)),
                 cc.CallFunc:create(function()
-                    self._model:setState(DiceModel.STATE_INVISIBLE)
+                    self:notify("EVENT_requestChangeInvisible")
                 end)
             ))
 
@@ -121,7 +121,7 @@ local MyClass = Global.DiceView
             self:runAction(cc.Sequence:create(
                 cc.DelayTime:create(2),
                 cc.CallFunc:create(function()
-                    self._model:setState(DiceModel.STATE_VISIBLE)
+                    self:notify("EVENT_requestChangeVisible")
                 end)
             ))
         else

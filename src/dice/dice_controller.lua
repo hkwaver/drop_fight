@@ -15,42 +15,44 @@ local MyClass = Global.DiceController
     end
 
     ------------------------------------------
-    -- setDiceGroupModel
+    -- setDiceModel
     ------------------------------------------
-    function MyClass:setDiceGroupModel(model)
+    function MyClass:setDiceModel(model)
 
-        self._diceGroupModel = model
+        self._diceModel = model
     end
 
     ------------------------------------------
-    -- setDiceGroupView
+    -- setDiceView
     ------------------------------------------
-    function MyClass:setDiceGroupView(view)
+    function MyClass:setDiceView(view)
 
-        self._diceGroupView = view
+        self._diceView = view
+        self._diceView:addObserver(self)
     end
 
     ------------------------------------------
-    -- initialize
+    -- EVENT_requestChangeVisible
     ------------------------------------------
-    function MyClass:initialize()
+    function MyClass:EVENT_requestChangeVisible()
 
-        for i = 1, Define.FIELD_ROW do
+        self._diceModel:setState(DiceModel.STATE_VISIBLE)
+    end
 
-            for j = 1, Define.FIELD_COLUMN do
+    ------------------------------------------
+    -- EVENT_requestChangeDrop
+    ------------------------------------------
+    function MyClass:EVENT_requestChangeDrop()
 
-                local index = (j + i * Define.FIELD_COLUMN) - 1
+        self._diceModel:setState(DiceModel.STATE_DROP)
+    end
 
-                local model = DiceModel:create()
-                model:setIndex(index)
-                self._diceGroupModel:addDiceModel(i, j, model)
+    ------------------------------------------
+    -- EVENT_requestChangeInvisible
+    ------------------------------------------
+    function MyClass:EVENT_requestChangeInvisible()
 
-                local view = DiceView:create()
-                view:setDiceModel(model)
-                view:addObserver(self)
-                self._diceGroupView:addChild(view)
-            end
-        end
+        self._diceModel:setState(DiceModel.STATE_INVISIBLE)
     end
 
 return MyClass
