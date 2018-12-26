@@ -15,7 +15,7 @@ local MyClass = Global.PlayerModel
         Observable.ctor(self)
 
         self._x = 0
-        self._y = 50
+        self._y = 20
         self._z = 0
         self._direction = cc.vec3(0, 0, 0)
     end
@@ -26,7 +26,7 @@ local MyClass = Global.PlayerModel
     function MyClass:getIndex()
 
         local x = math.floor(self._x / Define.DICE_SIZE) + math.floor(Define.FIELD_COLUMN / 2)
-        local z = math.floor(self._z / Define.DICE_SIZE) + math.floor(Define.FIELD_COLUMN / 2)
+        local z = math.floor(self._z / Define.DICE_SIZE) + math.floor(Define.FIELD_ROW / 2)
 
         return x + z * Define.FIELD_COLUMN
     end

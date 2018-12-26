@@ -82,7 +82,6 @@ local MyClass = Global.WorldLayer
     function MyClass:onTouchBegan(touch, event)
 
         self._isPressed = true
-        self._direction = cc.vec3(0, 0, 0)
 
         return true
     end

@@ -39,7 +39,7 @@ local MyClass = Global.DiceController
 
             for j = 1, Define.FIELD_COLUMN do
 
-                local index = j + i * Define.FIELD_COLUMN
+                local index = (j + i * Define.FIELD_COLUMN) - 1
 
                 local model = DiceModel:create()
                 model:setIndex(index)

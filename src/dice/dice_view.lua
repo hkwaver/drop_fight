@@ -73,8 +73,8 @@ local MyClass = Global.DiceView
     ------------------------------------------
     function MyClass:setPositionByIndex(index)
 
-        local x = (index - 1) % Define.FIELD_COLUMN - math.floor(Define.FIELD_COLUMN / 2)
-        local z = math.floor((index - 1) / Define.FIELD_COLUMN) - math.floor(Define.FIELD_COLUMN / 2)
+        local x = index % Define.FIELD_COLUMN - math.floor(Define.FIELD_COLUMN / 2) + 0.5
+        local z = math.floor(index / Define.FIELD_COLUMN) - math.floor(Define.FIELD_ROW / 2) - 0.5
 
         self:setPosition3D(cc.vec3(Define.DICE_SIZE * x, 0.0, Define.DICE_SIZE * z))
     end
