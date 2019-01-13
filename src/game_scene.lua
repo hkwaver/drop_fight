@@ -12,6 +12,9 @@ local MyClass = Global.GameScene
     ------------------------------------------
     function MyClass:ctor()
 
+        ConnectionManager.getInstance():initialize()
+        ConnectionManager.getInstance():addListener(self)
+
         self:enableNodeEvents()
     end
 
@@ -43,7 +46,6 @@ local MyClass = Global.GameScene
     -- initialize
     ------------------------------------------
     function MyClass:initialize()
-
 
         self._worldModel = WorldModel:create()
         self._worldView = WorldLayer:create()

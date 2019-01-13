@@ -14,6 +14,15 @@ local MyClass = Global.ConnectionManager
     ------------------------------------------
     function MyClass:ctor()
 
+        self._socket = nil
+        self._listeners = {}
+    end
+
+    ------------------------------------------
+    -- initialize
+    ------------------------------------------
+    function MyClass:initialize()
+
         local socket = cc.WebSocket:create('ws://127.0.0.1:5001', {"protocol"})
 
         socket:registerScriptHandler(handler(self, self.onWebSocketOpen), cc.WEBSOCKET_OPEN)
@@ -22,6 +31,7 @@ local MyClass = Global.ConnectionManager
         socket:registerScriptHandler(handler(self, self.onWebSocketError), cc.WEBSOCKET_ERROR)
 
         self._socket = socket
+        self._listeners = {}
     end
 
     ------------------------------------------
@@ -46,12 +56,26 @@ local MyClass = Global.ConnectionManager
     end
 
     ------------------------------------------
-    -- onWebSocketOpen
+    -- addListener
     ------------------------------------------
-    function MyClass:onWebSocketOpen(data)
+    function MyClass:addListener(listener)
 
-        printInfo("onWebSocketOpen")
-        dump(data)
+        table.insert(self._listeners, listener)
+    end
+
+    ------------------------------------------
+    -- removeListener
+    ------------------------------------------
+    function MyClass:removeListener(listener)
+
+        for i = 1, #self._listeners do
+
+            if self._listeners[i] == listener then
+
+                table.remove(self._listeners, i)
+                return
+            end
+        end
     end
 
     ------------------------------------------
@@ -59,8 +83,42 @@ local MyClass = Global.ConnectionManager
     ------------------------------------------
     function MyClass:onWebSocketMessage(data)
 
+        local parseData = json.decode(data)
+
         printInfo("onWebSocketMessage")
+        dump(parseData)
+
+        for key, value in pairs(Define.Packet) do
+
+            if parseData.type == value then
+
+                for i = 1, #self._listeners do
+
+                    local listener = self._listeners[i]
+                    if listener[key] ~= nil then
+
+                        listener[key](listener, parseData.data)
+                    end
+                end
+            end
+        end
+    end
+
+    ------------------------------------------
+    -- onWebSocketClose
+    ------------------------------------------
+    function MyClass:onWebSocketOpen(data)
+
+        printInfo("onWebSocketOpen")
         dump(data)
+
+        for i = 1, #self._listeners do
+
+            if self._listeners[i].onWebSocketOpen ~= nil then
+
+                self._listeners[i]:onWebSocketOpen(data)
+            end
+        end
     end
 
     ------------------------------------------
@@ -70,6 +128,14 @@ local MyClass = Global.ConnectionManager
 
         printInfo("onWebSocketClose")
         dump(data)
+
+        for i = 1, #self._listeners do
+
+            if self._listeners[i].onWebSocketClose ~= nil then
+
+                self._listeners[i]:onWebSocketClose(data)
+            end
+        end
     end
 
     ------------------------------------------
@@ -79,6 +145,14 @@ local MyClass = Global.ConnectionManager
 
         printInfo("onWebSocketError")
         dump(data)
+
+        for i = 1, #self._listeners do
+
+            if self._listeners[i].onWebSocketError ~= nil then
+
+                self._listeners[i]:onWebSocketError(data)
+            end
+        end
     end
 
     ------------------------------------------
@@ -92,7 +166,7 @@ local MyClass = Global.ConnectionManager
 
         if cc.WEBSOCKET_STATE_OPEN == self._socket:getReadyState() then
 
-            self._socket:sendString(data)
+            self._socket:sendString(json.encode(data))
         else
 
             printInfo("web socket closed")

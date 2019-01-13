@@ -14,8 +14,10 @@ local function main()
         "game_scene",
 
         "system/define",
+        "system/rxi_json",
         "system/layer_manager",
         "system/observable",
+        "system/connection_manager",
 
         "world/world_model",
         "world/world_layer",

@@ -9,6 +9,10 @@ Global.Define = class("Define")
         WORLD = "world",
     }
 
+    Define.Packet = {
+        PK_ROOM_JOIN = 1,
+    }
+
     Define.FIELD_ROW = 8
     Define.FIELD_COLUMN = 8
 
