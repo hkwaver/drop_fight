@@ -9,10 +9,6 @@ Global.Define = class("Define")
         WORLD = "world",
     }
 
-    Define.Packet = {
-        PK_ROOM_JOIN = 1,
-    }
-
     Define.FIELD_ROW = 8
     Define.FIELD_COLUMN = 8
 
@@ -25,3 +21,10 @@ Global.Define = class("Define")
     Define.DIRECTION_LEFT    = cc.vec3(-1, 0, 0)
     Define.DIRECTION_FORWARD = cc.vec3(0, 0, 1)
     Define.DIRECTION_BACK    = cc.vec3(0, 0, -1)
+
+    Define.Packet = {}
+
+    Define.Packet.PK_AUTH_HELLO = 100;
+    Define.Packet.PK_ROOM_MAKE  = 1000;
+    Define.Packet.PK_ROOM_JOIN  = 1001;
+    Define.Packet.PK_DEPARTURE  = 2000;

@@ -23,7 +23,7 @@ local MyClass = Global.ConnectionManager
     ------------------------------------------
     function MyClass:initialize()
 
-        local socket = cc.WebSocket:create('ws://127.0.0.1:5001', {"protocol"})
+        local socket = cc.WebSocket:create('ws://localhost:8080', {"protocol"})
 
         socket:registerScriptHandler(handler(self, self.onWebSocketOpen), cc.WEBSOCKET_OPEN)
         socket:registerScriptHandler(handler(self, self.onWebSocketMessage) ,cc.WEBSOCKET_MESSAGE)

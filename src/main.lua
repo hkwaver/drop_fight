@@ -11,6 +11,9 @@ cc.exports.Global = cc.exports
 local function main()
 
     local requires = {
+
+        "lobby/lobby_scene",
+
         "game_scene",
 
         "system/define",
@@ -41,7 +44,11 @@ local function main()
         require(value)
     end
 
-    cc.Director:getInstance():runWithScene(GameScene:create())
+    math.newrandomseed()
+
+    ConnectionManager.getInstance():initialize()
+
+    display.runScene(LobbyScene:create())
 end
 
 local status, msg = xpcall(main, __G__TRACKBACK__)

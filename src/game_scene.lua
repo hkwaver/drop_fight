@@ -12,9 +12,6 @@ local MyClass = Global.GameScene
     ------------------------------------------
     function MyClass:ctor()
 
-        ConnectionManager.getInstance():initialize()
-        ConnectionManager.getInstance():addListener(self)
-
         self:enableNodeEvents()
     end
 
@@ -33,6 +30,8 @@ local MyClass = Global.GameScene
         self:addChild(light)
 
         self:initialize()
+
+        ConnectionManager.getInstance():addListener(self)
     end
 
     ------------------------------------------
@@ -40,6 +39,7 @@ local MyClass = Global.GameScene
     ------------------------------------------
     function MyClass:onExit()
 
+        ConnectionManager.getInstance():removeListener(self)
     end
 
     ------------------------------------------
