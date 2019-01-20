@@ -114,3 +114,4 @@ proj.win32/Release.*/
 # others
 frameworks/
 simulator/
+drop_fight_server/node_modules/
