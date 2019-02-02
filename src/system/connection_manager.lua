@@ -14,7 +14,7 @@ local MyClass = Global.ConnectionManager
     ------------------------------------------
     function MyClass:ctor()
 
-        self._socket = nil
+        self._network = nil
         self._listeners = {}
     end
 
@@ -23,14 +23,15 @@ local MyClass = Global.ConnectionManager
     ------------------------------------------
     function MyClass:initialize()
 
-        local socket = cc.WebSocket:create('ws://localhost:8080', {"protocol"})
+        local network = NetworkLogic:create()
+        network:registerScriptHandler(handler(self, self.onPhotonOpen), cc.PHOTON_OPEN)
+        network:registerScriptHandler(handler(self, self.onPhotonMessage) ,cc.PHOTON_MESSAGE)
+        network:registerScriptHandler(handler(self, self.onPhotonClose), cc.PHOTON_CLOSE)
+        network:registerScriptHandler(handler(self, self.onPhotonError), cc.PHOTON_ERROR)
 
-        socket:registerScriptHandler(handler(self, self.onWebSocketOpen), cc.WEBSOCKET_OPEN)
-        socket:registerScriptHandler(handler(self, self.onWebSocketMessage) ,cc.WEBSOCKET_MESSAGE)
-        socket:registerScriptHandler(handler(self, self.onWebSocketClose), cc.WEBSOCKET_CLOSE)
-        socket:registerScriptHandler(handler(self, self.onWebSocketError), cc.WEBSOCKET_ERROR)
+        cc.Director:getInstance():getScheduler():scheduleScriptFunc(handler(self, self.update), 0, false)
 
-        self._socket = socket
+        self._network = network
         self._listeners = {}
     end
 
@@ -39,7 +40,7 @@ local MyClass = Global.ConnectionManager
     ------------------------------------------
     function MyClass:dispose()
 
-        self._socket = nil
+        self._network = nil
     end
 
     ------------------------------------------
@@ -53,6 +54,14 @@ local MyClass = Global.ConnectionManager
         end
 
         return MyClass.Instance
+    end
+
+    ------------------------------------------
+    -- update
+    ------------------------------------------
+    function MyClass:update()
+
+        self._network:run()
     end
 
     ------------------------------------------
@@ -79,13 +88,13 @@ local MyClass = Global.ConnectionManager
     end
 
     ------------------------------------------
-    -- onWebSocketMessage
+    -- onPhotonMessage
     ------------------------------------------
-    function MyClass:onWebSocketMessage(data)
+    function MyClass:onPhotonMessage(data)
 
         local parseData = json.decode(data)
 
-        printInfo("onWebSocketMessage")
+        printInfo("onPhotonMessage")
         dump(parseData)
 
         for key, value in pairs(Define.Packet) do
@@ -105,52 +114,52 @@ local MyClass = Global.ConnectionManager
     end
 
     ------------------------------------------
-    -- onWebSocketClose
+    -- onPhotonOpen
     ------------------------------------------
-    function MyClass:onWebSocketOpen(data)
+    function MyClass:onPhotonOpen(data)
 
-        printInfo("onWebSocketOpen")
+        printInfo("onPhotonOpen")
         dump(data)
 
         for i = 1, #self._listeners do
 
-            if self._listeners[i].onWebSocketOpen ~= nil then
+            if self._listeners[i].onPhotonOpen ~= nil then
 
-                self._listeners[i]:onWebSocketOpen(data)
+                self._listeners[i]:onPhotonOpen(data)
             end
         end
     end
 
     ------------------------------------------
-    -- onWebSocketClose
+    -- onPhotonClose
     ------------------------------------------
-    function MyClass:onWebSocketClose(data)
+    function MyClass:onPhotonClose(data)
 
-        printInfo("onWebSocketClose")
+        printInfo("onPhotonClose")
         dump(data)
 
         for i = 1, #self._listeners do
 
-            if self._listeners[i].onWebSocketClose ~= nil then
+            if self._listeners[i].onPhotonClose ~= nil then
 
-                self._listeners[i]:onWebSocketClose(data)
+                self._listeners[i]:onPhotonClose(data)
             end
         end
     end
 
     ------------------------------------------
-    -- onWebSocketError
+    -- onPhotonError
     ------------------------------------------
-    function MyClass:onWebSocketError(data)
+    function MyClass:onPhotonError(data)
 
-        printInfo("onWebSocketError")
+        printInfo("onPhotonError")
         dump(data)
 
         for i = 1, #self._listeners do
 
-            if self._listeners[i].onWebSocketError ~= nil then
+            if self._listeners[i].onPhotonError ~= nil then
 
-                self._listeners[i]:onWebSocketError(data)
+                self._listeners[i]:onPhotonError(data)
             end
         end
     end
